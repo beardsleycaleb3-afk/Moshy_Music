@@ -11,16 +11,16 @@
 body{background:#000;color:#fff;height:100vh;overflow:hidden;display:flex;flex-direction:column}
 #splash{position:fixed;inset:0;background:#000;z-index:999;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
 #splash h1{font-size:2.8rem;margin-bottom:1.5rem}
-#splash p{font-size:1.6rem;color:#0f0;padding:1rem;border:6px solid #0f0;border-radius:22px}
+#splash p{font-size:1.6rem;color:#0f0;padding:1rem;border:3px solid #0f0;border-radius:12px}
 #frame{display:none;flex-direction:column;height:100vh;border:10px solid var(--accent)}
 #visual{flex:1;position:relative;background:#000;overflow:hidden}
 .layer{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
-#bg{opacity:1}
+#backgroundImage{opacity:1}
 #gl-canvas{position:absolute;inset:0}
 #particles{position:absolute;inset:0;pointer-events:none}
 #hud{height:80px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:8px;background:#111}
-.btn{border:6px solid var(--accent);border-radius:50%;background:#666;color:var(--accent);font-size:18px;font-weight:bold;display:flex;align-items:center;justify-content:center;touch-action:manipulation}
-.btn.active{background:var(--accent);color:#333}
+.btn{border:8px solid var(--accent);border-radius:50%;background:#000;color:var(--accent);font-size:24px;font-weight:bold;display:flex;align-items:center;justify-content:center;touch-action:manipulation}
+.btn.active{background:var(--accent);color:#000}
 :root{--accent:#fff}
 </style>
 </head>
@@ -28,12 +28,12 @@ body{background:#000;color:#fff;height:100vh;overflow:hidden;display:flex;flex-d
 
 <div id="splash">
   <h1>TOUCH HERE FOR A GOOD TIME</h1>
-  <p ontouchstart="startApp()">TAP TO START</p>
+  <p ontouchstart="startApp()">TAP GENTLY</p>
 </div>
 
 <div id="frame">
   <div id="visual">
-    <img id="bg" class="layer">
+    <img id="backgroundImage" class="layer">
     <canvas id="gl-canvas"></canvas>
     <canvas id="particles"></canvas>
   </div>
@@ -71,14 +71,14 @@ function startApp(){
   source.connect(analyser);
   analyser.connect(audioCtx.destination);
   initThree();
-  updateCore('assets/music/synth/cores/1c2.jpeg');
+  updateCore('assets/music/synth/cores/1c1.jpeg');
   audio.play().catch(()=>0);
 }
 
 function initThree(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
-  camera.position.z = 20;
+  camera.position.z = 10;
   renderer = new THREE.WebGLRenderer({canvas:document.getElementById('gl-canvas'),alpha:true});
   renderer.setSize(innerWidth,innerHeight);
   animateCore();
@@ -86,7 +86,7 @@ function initThree(){
 
 function updateCore(tex){
   if(core) scene.remove(core);
-  core = new THREE.Mesh(new THREE.SphereGeometry(1.2,32,32),new THREE.MeshBasicMaterial({map:loader.load(tex)}));
+  core = new THREE.Mesh(new THREE.SphereGeometry(2.2,32,32),new THREE.MeshBasicMaterial({map:loader.load(tex)}));
   scene.add(core);
 }
 
@@ -166,7 +166,7 @@ function animateP(){
   if(analyser&&dataArray){
     analyser.getByteFrequencyData(dataArray);
     const energy=dataArray.reduce((a,b)=>a+b,0)/(dataArray.length*255)||0;
-    if(energy>0.35&&Math.random()<0.08)spawn4(document.getElementById('bg').src.replace('b','p').replace('backgrounds','sprites'));
+    if(energy>0.35&&Math.random()<0.08)spawn4(document.getElementById('backgroundImage').src.replace('b','p').replace('backgrounds','sprites'));
   }
   for(let i=particles.length-1;i>=0;i--){
     let p=particles[i];
@@ -185,7 +185,7 @@ function play1(){
   document.documentElement.style.setProperty('--accent','#00ffff');
   document.querySelectorAll('.btn').forEach(b=>b.classList.toggle('active',b.innerText==='©'));
   audio.src='assets/music/synth/1.mp3';audio.play();
-  document.getElementById('bg').src='assets/music/synth/backgrounds/1b1.jpeg';
+  document.getElementById('backgroundImage').src='assets/music/synth/backgrounds/1b1.jpeg';
   updateCore('assets/music/synth/cores/1c1.jpeg');
   spawn4('assets/music/synth/sprites/1p1.jpeg');
   stopLoops();
@@ -194,10 +194,10 @@ function play1(){
   let s=0;
   bgInt=setInterval(()=>{
     s++;
-    if(s===1){document.getElementById('bg').src='assets/music/synth/backgrounds/1b2.jpeg';updateCore('assets/music/synth/cores/1c2.jpeg');spawn4('assets/music/synth/sprites/1p2.jpeg');}
-    if(s===2){document.getElementById('bg').src='assets/music/synth/backgrounds/1b3.jpeg';updateCore('assets/music/synth/cores/1c3.jpeg');spawn4('assets/music/synth/sprites/1p3.jpeg');}
-    if(s===3){document.getElementById('bg').src='assets/music/synth/backgrounds/1b4.jpeg';updateCore('assets/music/synth/cores/1c4.jpeg');spawn4('assets/music/synth/sprites/1p4.jpeg');}
-    if(s===4){document.getElementById('bg').src='assets/music/synth/backgrounds/1b5.jpeg';updateCore('assets/music/synth/cores/1c5.jpeg');spawn4('assets/music/synth/sprites/1p5.jpeg');}
+    if(s===1){document.getElementById('backgroundImage').src='assets/music/synth/backgrounds/1b2.jpeg';updateCore('assets/music/synth/cores/1c2.jpeg');spawn4('assets/music/synth/sprites/1p2.jpeg');}
+    if(s===2){document.getElementById('backgroundImage').src='assets/music/synth/backgrounds/1b3.jpeg';updateCore('assets/music/synth/cores/1c3.jpeg');spawn4('assets/music/synth/sprites/1p3.jpeg');}
+    if(s===3){document.getElementById('backgroundImage').src='assets/music/synth/backgrounds/1b4.jpeg';updateCore('assets/music/synth/cores/1c4.jpeg');spawn4('assets/music/synth/sprites/1p4.jpeg');}
+    if(s===4){document.getElementById('backgroundImage').src='assets/music/synth/backgrounds/1b5.jpeg';updateCore('assets/music/synth/cores/1c5.jpeg');spawn4('assets/music/synth/sprites/1p5.jpeg');}
     if(s>=5)clearInterval(bgInt);
   },t);
 }
@@ -206,7 +206,7 @@ function play2(){
   document.documentElement.style.setProperty('--accent','#ff00ff');
   document.querySelectorAll('.btn').forEach(b=>b.classList.toggle('active',b.innerText==='°'));
   audio.src='assets/music/xray/2.mp3';audio.play();
-  document.getElementById('bg').src='assets/music/xray/backgrounds/2b1.jpeg';
+  document.getElementById('backgroundImage').src='assets/music/xray/backgrounds/2b1.jpeg';
   updateCore('assets/music/xray/cores/2c1.jpeg');
   spawn4('assets/music/xray/sprites/2p1.jpeg');
   stopLoops();
@@ -215,10 +215,10 @@ function play2(){
   let s=0;
   bgInt=setInterval(()=>{
     s++;
-    if(s===1){document.getElementById('bg').src='assets/music/xray/backgrounds/2b2.jpeg';updateCore('assets/music/xray/cores/2c2.jpeg');spawn4('assets/music/xray/sprites/2p2.jpeg');}
-    if(s===2){document.getElementById('bg').src='assets/music/xray/backgrounds/2b3.jpeg';updateCore('assets/music/xray/cores/2c3.jpeg');spawn4('assets/music/xray/sprites/2p3.jpeg');}
-    if(s===3){document.getElementById('bg').src='assets/music/xray/backgrounds/2b4.jpeg';updateCore('assets/music/xray/cores/2c4.jpeg');spawn4('assets/music/xray/sprites/2p4.jpeg');}
-    if(s===4){document.getElementById('bg').src='assets/music/xray/backgrounds/2b5.jpeg';updateCore('assets/music/xray/cores/2c5.jpeg');spawn4('assets/music/xray/sprites/2p5.jpeg');}
+    if(s===1){document.getElementById('backgroundImage').src='assets/music/xray/backgrounds/2b2.jpeg';updateCore('assets/music/xray/cores/2c2.jpeg');spawn4('assets/music/xray/sprites/2p2.jpeg');}
+    if(s===2){document.getElementById('backgroundImage').src='assets/music/xray/backgrounds/2b3.jpeg';updateCore('assets/music/xray/cores/2c3.jpeg');spawn4('assets/music/xray/sprites/2p3.jpeg');}
+    if(s===3){document.getElementById('backgroundImage').src='assets/music/xray/backgrounds/2b4.jpeg';updateCore('assets/music/xray/cores/2c4.jpeg');spawn4('assets/music/xray/sprites/2p4.jpeg');}
+    if(s===4){document.getElementById('backgroundImage').src='assets/music/xray/backgrounds/2b5.jpeg';updateCore('assets/music/xray/cores/2c5.jpeg');spawn4('assets/music/xray/sprites/2p5.jpeg');}
     if(s>=5)clearInterval(bgInt);
   },t);
 }
@@ -227,7 +227,7 @@ function play3(){
   document.documentElement.style.setProperty('--accent','#ffff00');
   document.querySelectorAll('.btn').forEach(b=>b.classList.toggle('active',b.innerText==='∆'));
   audio.src='assets/music/volt/3.mp3';audio.play();
-  document.getElementById('bg').src='assets/music/volt/backgrounds/3b1.jpeg';
+  document.getElementById('backgroundImage').src='assets/music/volt/backgrounds/3b1.jpeg';
   updateCore('assets/music/volt/cores/3c1.jpeg');
   spawn4('assets/music/volt/sprites/3p1.jpeg');
   stopLoops();
@@ -236,10 +236,10 @@ function play3(){
   let s=0;
   bgInt=setInterval(()=>{
     s++;
-    if(s===1){document.getElementById('bg').src='assets/music/volt/backgrounds/3b2.jpeg';updateCore('assets/music/volt/cores/3c2.jpeg');spawn4('assets/music/volt/sprites/3p2.jpeg');}
-    if(s===2){document.getElementById('bg').src='assets/music/volt/backgrounds/3b3.jpeg';updateCore('assets/music/volt/cores/3c3.jpeg');spawn4('assets/music/volt/sprites/3p3.jpeg');}
-    if(s===3){document.getElementById('bg').src='assets/music/volt/backgrounds/3b4.jpeg';updateCore('assets/music/volt/cores/3c4.jpeg');spawn4('assets/music/volt/sprites/3p4.jpeg');}
-    if(s===4){document.getElementById('bg').src='assets/music/volt/backgrounds/3b5.jpeg';updateCore('assets/music/volt/cores/3c5.jpeg');spawn4('assets/music/volt/sprites/3p5.jpeg');}
+    if(s===1){document.getElementById('backgroundImage').src='assets/music/volt/backgrounds/3b2.jpeg';updateCore('assets/music/volt/cores/3c2.jpeg');spawn4('assets/music/volt/sprites/3p2.jpeg');}
+    if(s===2){document.getElementById('backgroundImage').src='assets/music/volt/backgrounds/3b3.jpeg';updateCore('assets/music/volt/cores/3c3.jpeg');spawn4('assets/music/volt/sprites/3p3.jpeg');}
+    if(s===3){document.getElementById('backgroundImage').src='assets/music/volt/backgrounds/3b4.jpeg';updateCore('assets/music/volt/cores/3c4.jpeg');spawn4('assets/music/volt/sprites/3p4.jpeg');}
+    if(s===4){document.getElementById('backgroundImage').src='assets/music/volt/backgrounds/3b5.jpeg';updateCore('assets/music/volt/cores/3c5.jpeg');spawn4('assets/music/volt/sprites/3p5.jpeg');}
     if(s>=5)clearInterval(bgInt);
   },t);
 }
@@ -248,7 +248,7 @@ function play4(){
   document.documentElement.style.setProperty('--accent','#00ff00');
   document.querySelectorAll('.btn').forEach(b=>b.classList.toggle('active',b.innerText==='•'));
   audio.src='assets/music/grid/4.mp3';audio.play();
-  document.getElementById('bg').src='assets/music/grid/backgrounds/4b1.jpeg';
+  document.getElementById('backgroundImage').src='assets/music/grid/backgrounds/4b1.jpeg';
   updateCore('assets/music/grid/cores/4c1.jpeg');
   spawn4('assets/music/grid/sprites/4p1.jpeg');
   stopLoops();
@@ -257,10 +257,10 @@ function play4(){
   let s=0;
   bgInt=setInterval(()=>{
     s++;
-    if(s===1){document.getElementById('bg').src='assets/music/grid/backgrounds/4b2.jpeg';updateCore('assets/music/grid/cores/4c2.jpeg');spawn4('assets/music/grid/sprites/4p2.jpeg');}
-    if(s===2){document.getElementById('bg').src='assets/music/grid/backgrounds/4b3.jpeg';updateCore('assets/music/grid/cores/4c3.jpeg');spawn4('assets/music/grid/sprites/4p3.jpeg');}
-    if(s===3){document.getElementById('bg').src='assets/music/grid/backgrounds/4b4.jpeg';updateCore('assets/music/grid/cores/4c4.jpeg');spawn4('assets/music/grid/sprites/4p4.jpeg');}
-    if(s===4){document.getElementById('bg').src='assets/music/grid/backgrounds/4b5.jpeg';updateCore('assets/music/grid/cores/4c5.jpeg');spawn4('assets/music/grid/sprites/4p5.jpeg');}
+    if(s===1){document.getElementById('backgroundImage').src='assets/music/grid/backgrounds/4b2.jpeg';updateCore('assets/music/grid/cores/4c2.jpeg');spawn4('assets/music/grid/sprites/4p2.jpeg');}
+    if(s===2){document.getElementById('backgroundImage').src='assets/music/grid/backgrounds/4b3.jpeg';updateCore('assets/music/grid/cores/4c3.jpeg');spawn4('assets/music/grid/sprites/4p3.jpeg');}
+    if(s===3){document.getElementById('backgroundImage').src='assets/music/grid/backgrounds/4b4.jpeg';updateCore('assets/music/grid/cores/4c4.jpeg');spawn4('assets/music/grid/sprites/4p4.jpeg');}
+    if(s===4){document.getElementById('backgroundImage').src='assets/music/grid/backgrounds/4b5.jpeg';updateCore('assets/music/grid/cores/4c5.jpeg');spawn4('assets/music/grid/sprites/4p5.jpeg');}
     if(s>=5)clearInterval(bgInt);
   },t);
 }
@@ -269,7 +269,7 @@ function play5(){
   document.documentElement.style.setProperty('--accent','#ff0000');
   document.querySelectorAll('.btn').forEach(b=>b.classList.toggle('active',b.innerText==='®'));
   audio.src='assets/music/horror/5.mp3';audio.play();
-  document.getElementById('bg').src='assets/music/horror/backgrounds/5b1.jpeg';
+  document.getElementById('backgroundImage').src='assets/music/horror/backgrounds/5b1.jpeg';
   updateCore('assets/music/horror/cores/5c1.jpeg');
   spawn4('assets/music/horror/sprites/5p1.jpeg');
   stopLoops();
@@ -278,10 +278,10 @@ function play5(){
   let s=0;
   bgInt=setInterval(()=>{
     s++;
-    if(s===1){document.getElementById('bg').src='assets/music/horror/backgrounds/5b2.jpeg';updateCore('assets/music/horror/cores/5c2.jpeg');spawn4('assets/music/horror/sprites/5p2.jpeg');}
-    if(s===2){document.getElementById('bg').src='assets/music/horror/backgrounds/5b3.jpeg';updateCore('assets/music/horror/cores/5c3.jpeg');spawn4('assets/music/horror/sprites/5p3.jpeg');}
-    if(s===3){document.getElementById('bg').src='assets/music/horror/backgrounds/5b4.jpeg';updateCore('assets/music/horror/cores/5c4.jpeg');spawn4('assets/music/horror/sprites/5p4.jpeg');}
-    if(s===4){document.getElementById('bg').src='assets/music/horror/backgrounds/5b5.jpeg';updateCore('assets/music/horror/cores/5c5.jpeg');spawn4('assets/music/horror/sprites/5p5.jpeg');}
+    if(s===1){document.getElementById('backgroundImage').src='assets/music/horror/backgrounds/5b2.jpeg';updateCore('assets/music/horror/cores/5c2.jpeg');spawn4('assets/music/horror/sprites/5p2.jpeg');}
+    if(s===2){document.getElementById('backgroundImage').src='assets/music/horror/backgrounds/5b3.jpeg';updateCore('assets/music/horror/cores/5c3.jpeg');spawn4('assets/music/horror/sprites/5p3.jpeg');}
+    if(s===3){document.getElementById('backgroundImage').src='assets/music/horror/backgrounds/5b4.jpeg';updateCore('assets/music/horror/cores/5c4.jpeg');spawn4('assets/music/horror/sprites/5p4.jpeg');}
+    if(s===4){document.getElementById('backgroundImage').src='assets/music/horror/backgrounds/5b5.jpeg';updateCore('assets/music/horror/cores/5c5.jpeg');spawn4('assets/music/horror/sprites/5p5.jpeg');}
     if(s>=5)clearInterval(bgInt);
   },t);
 }
