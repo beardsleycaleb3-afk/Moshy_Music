@@ -1,6 +1,6 @@
 DBM•MBD
 moshiach ben david music 
-# VizPWA – The Touch-Activated Audio Visualizer That Slaps Harder Than Your Ex's New Playlist
+# Moshy_Music – The Touch-Activated Audio Visualizer That Slaps Harder Than Your Ex's New Playlist
 
 **"Tap once for vibes. Tap five times and question your life choices."**
 
