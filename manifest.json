@@ -1,0 +1,8 @@
+{
+  "name": "Moshy_Music",
+  "short_name": "DBM",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#000",
+  "theme_color": "#fff"
+}
