@@ -1,6 +1,6 @@
 // sw.js – complete offline caching with all asset paths
 
-const CACHE = 'viz-pwa-v1';
+const CACHE = 'Moshy_Music';
 
 const ASSETS = [
   '/',
@@ -98,8 +98,8 @@ const ASSETS = [
   'assets/music/horror/cores/5c5.jpeg'
 
   // add icons if present
-  // 'icon-192.png',
-  // 'icon-512.png'
+  // 'icon.jpeg',
+  // 'icon.jpeg'
 ];
 
 self.addEventListener('install', e => {
